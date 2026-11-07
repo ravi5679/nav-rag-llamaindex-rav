@@ -1,0 +1,22 @@
+services:
+  backend:
+    build: ./backend
+    env_file: ./backend/.env
+    environment:
+      ENVIRONMENT: prod
+      DATA_DIR: /srv/data
+      STORAGE_DIR: /srv/storage
+    volumes:
+      - ./backend/data:/srv/data          # uploaded documents
+      - ./backend/storage:/srv/storage    # persisted vector index
+    expose:
+      - "8000"                            # reachable only from the frontend container
+
+  frontend:
+    build: ./frontend
+    environment:
+      API_KEY: ${API_KEY:?set API_KEY in a root .env file or your shell}
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend

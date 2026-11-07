@@ -1,0 +1,134 @@
+/* The shell is exactly one viewport tall. The sidebar and the workspace are separate columns;
+   each manages its own scrolling, so scrolling one never moves the other. */
+.dash { display: flex; height: 100vh; height: 100dvh; overflow: hidden; --sidebar-w: 270px; }
+
+/* ---------- sidebar: logo on top, menu scrolls underneath ---------- */
+.sidebar {
+  width: var(--sidebar-w); flex: 0 0 var(--sidebar-w); height: 100%; min-height: 0;
+  display: flex; flex-direction: column;
+  background: var(--bg-soft); border-right: 1px solid var(--border);
+  transition: margin-left 0.25s ease;
+}
+.dash.collapsed .sidebar { margin-left: calc(var(--sidebar-w) * -1); }
+
+.sidebar-top {
+  flex-shrink: 0; height: 64px; display: flex; align-items: center; justify-content: space-between;
+  padding: 0 12px 0 18px; border-bottom: 1px solid var(--border);
+}
+.sidebar-brand { text-decoration: none; }
+.sidebar-collapse {
+  display: grid; place-items: center; width: 32px; height: 32px; border-radius: 8px;
+  background: transparent; border: 0; color: var(--muted); cursor: pointer;
+}
+.sidebar-collapse:hover { background: var(--card); color: var(--text); }
+
+.sidebar-nav {
+  flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain;
+  padding: 12px 10px 20px; display: flex; flex-direction: column; gap: 8px;
+  scrollbar-width: thin; scrollbar-color: var(--border) transparent;
+}
+
+/* expandable headers */
+.nav-head {
+  width: 100%; display: flex; align-items: center; gap: 10px; text-align: left;
+  background: transparent; border: 1px solid transparent; color: var(--text);
+  font: inherit; cursor: pointer; border-radius: 10px;
+}
+.nav-head span { flex: 1; }
+.nav-head .chev { color: var(--muted); transition: transform 0.2s; }
+.nav-head[aria-expanded='false'] .chev { transform: rotate(-90deg); }
+.level-1 > .nav-head { padding: 11px 12px; font-weight: 700; font-size: 0.97rem; background: var(--card); border-color: var(--border); }
+.level-1 > .nav-head:hover { background: var(--card-hover); }
+.level-1 > .nav-head > svg:first-child { color: var(--brand); }
+.level-2 > .nav-head { padding: 8px 10px; font-weight: 600; font-size: 0.9rem; color: #cdd7ee; }
+.level-2 > .nav-head:hover { background: var(--card); }
+.level-2 > .nav-head > svg:first-child { color: var(--muted); }
+
+/* animated open/close (closed bodies are also `inert` from React) */
+.collapse { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.2s ease; }
+.collapse.is-open { grid-template-rows: 1fr; }
+.collapse-inner { min-height: 0; overflow: hidden; }
+
+/* hierarchy: indent + guide line */
+.level-1 > .collapse > .collapse-inner { margin-left: 16px; padding: 4px 0 0 6px; border-left: 1px solid var(--border); }
+.level-2 > .collapse > .collapse-inner { margin-left: 12px; padding-left: 4px; }
+
+.nav-pages { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; }
+.side-link {
+  display: flex; align-items: center; gap: 10px; padding: 7px 10px; border-radius: 8px;
+  color: var(--muted); text-decoration: none; font-weight: 500; font-size: 0.88rem;
+  transition: background 0.15s, color 0.15s;
+}
+.side-link:hover { background: var(--card); color: var(--text); }
+.side-link.active { background: var(--brand); color: #fff; }
+
+/* ---------- main area ---------- */
+.dash-main { flex: 1; min-width: 0; min-height: 0; display: flex; flex-direction: column; }
+.dash-topbar {
+  flex-shrink: 0; height: 64px; display: flex; align-items: center; gap: 12px;
+  padding: 0 24px; border-bottom: 1px solid var(--border); background: var(--bg-soft);
+}
+.dash-topbar .dash-toggle { display: inline-flex; } /* only rendered when the sidebar is hidden */
+.dash-user { display: flex; align-items: center; gap: 12px; margin-left: auto; }
+.dash-user img { width: 34px; height: 34px; border-radius: 50%; object-fit: cover; object-position: 50% 18%; border: 1px solid var(--brand); }
+.dash-email { font-size: 0.88rem; color: var(--muted); }
+.dash-content {
+  flex: 1; min-height: 0; width: 100%; max-width: 1400px; margin-inline: auto; padding: 20px 24px;
+  display: flex; flex-direction: column; overflow-y: auto;
+}
+.dash-overlay { display: none; }
+
+/* ---------- workspace: title, tabs, page ---------- */
+.ws { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 14px; }
+.ws-header { flex-shrink: 0; display: flex; align-items: center; gap: 16px; }
+.ws-icon {
+  flex-shrink: 0; width: 56px; height: 56px; display: grid; place-items: center; border-radius: 14px;
+  background: var(--card); border: 1px solid var(--border); color: var(--brand);
+}
+.ws-header h1 { font-size: 1.45rem; margin: 0; }
+.ws-header p { margin: 0; font-size: 0.92rem; }
+.ws-tabs {
+  flex-shrink: 0; display: flex; gap: 4px; padding: 4px; overflow-x: auto;
+  background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+}
+.ws-tab {
+  flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px; white-space: nowrap;
+  padding: 10px 14px; border-radius: 9px; color: var(--muted); text-decoration: none; font-weight: 600; font-size: 0.92rem;
+}
+.ws-tab:hover { color: var(--text); background: var(--card-hover); }
+.ws-tab.active { background: var(--brand); color: #fff; }
+.ws-body { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+.coming-soon {
+  margin: auto; text-align: center; padding: 40px 24px; max-width: 420px;
+  background: var(--card); border: 1px dashed var(--border); border-radius: var(--radius);
+}
+.coming-soon h2 { font-size: 1.15rem; }
+.coming-soon p { margin: 0; }
+
+/* ---------- mobile / tablet: sidebar becomes a slide-in drawer ---------- */
+@media (max-width: 860px) {
+  .sidebar {
+    position: fixed; left: 0; top: 0; z-index: 40; margin-left: 0; transform: translateX(-100%);
+    max-width: 85vw; transition: transform 0.25s ease; box-shadow: 10px 0 40px rgba(0, 0, 0, 0.5);
+  }
+  .sidebar.open { transform: translateX(0); }
+  .dash-overlay { display: block; position: fixed; inset: 0; z-index: 30; background: rgba(2, 6, 16, 0.65); }
+  .dash-topbar { padding: 0 14px; }
+  .dash-content { padding: 12px 12px 14px; }
+  .ws { gap: 10px; }
+  .ws-header { gap: 12px; }
+  .ws-header p { display: none; }
+  .ws-icon { width: 44px; height: 44px; border-radius: 12px; }
+  .ws-icon svg { width: 22px; height: 22px; }
+  .ws-header h1 { font-size: 1.2rem; }
+}
+@media (max-width: 600px) {
+  .ws-tab:not(.active) span { display: none; } /* icons only, to fit three tabs */
+  .ws-tab.active { flex: 3; }
+}
+@media (max-width: 480px) {
+  .dash-email { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sidebar, .collapse, .nav-head .chev { transition: none; }
+}

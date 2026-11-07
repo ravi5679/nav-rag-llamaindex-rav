@@ -1,0 +1,76 @@
+/* Results scroll on the left, reference library on the right; both inside the workspace body */
+.stamp-page {
+  flex: 1; min-height: 0;
+  display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 16px;
+}
+.stamp-main { min-height: 0; overflow-y: auto; overscroll-behavior: contain; display: flex; flex-direction: column; gap: 16px; }
+
+.stamp-panel, .stamp-card {
+  background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px;
+}
+.stamp-panel h2 { font-size: 1.05rem; margin: 0 0 6px; }
+.stamp-panel > p { font-size: 0.9rem; }
+.stamp-panel input[type='file'] { max-width: 100%; }
+
+/* status badges */
+.badge { font-size: 0.78rem; font-weight: 700; padding: 3px 10px; border-radius: 999px; white-space: nowrap; }
+.badge.big { font-size: 0.95rem; padding: 6px 14px; }
+.badge.matched { color: var(--ok); background: rgba(74, 222, 128, 0.12); border: 1px solid rgba(74, 222, 128, 0.35); }
+.badge.unknown { color: #fbbf24; background: rgba(251, 191, 36, 0.12); border: 1px solid rgba(251, 191, 36, 0.35); }
+.badge.none { color: var(--muted); background: var(--bg-soft); border: 1px solid var(--border); }
+
+/* summary */
+.summary { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.summary h2 { word-break: break-all; }
+.summary p { margin: 0; font-size: 0.85rem; }
+.summary-facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 14px 0 0; }
+.summary-facts div { background: var(--bg-soft); border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; }
+.summary-facts dt { font-size: 0.75rem; color: var(--muted); }
+.summary-facts dd { margin: 2px 0 0; font-weight: 700; word-break: break-all; }
+
+/* one detected stamp */
+.stamp-card header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.stamp-card h3 { margin: 0; font-size: 1rem; }
+.stamp-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.stamp-compare figure {
+  margin: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+  padding: 12px; min-height: 180px; border-radius: 10px; background: #fff; border: 1px solid var(--border);
+}
+.stamp-compare img { max-height: 200px; width: auto; object-fit: contain; }
+.stamp-compare figcaption { font-size: 0.8rem; color: #334155; font-weight: 600; text-align: center; word-break: break-all; }
+.stamp-compare figure.empty { background: var(--bg-soft); }
+.stamp-compare figure.empty span { color: var(--muted); font-size: 0.85rem; }
+.stamp-compare figure.empty figcaption { color: #fbbf24; }
+
+.stamp-facts { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 8px 12px; margin: 14px 0 0; font-size: 0.88rem; }
+.stamp-facts dt { color: var(--muted); }
+.stamp-facts dd { margin: 0; }
+.candidates { margin: 0; padding-left: 18px; }
+.candidates code { color: var(--accent-2); }
+
+.conf { position: relative; height: 22px; border-radius: 6px; background: var(--bg-soft); border: 1px solid var(--border); overflow: hidden; }
+.conf-fill { position: absolute; inset: 0 auto 0 0; background: var(--gradient); }
+.conf span { position: relative; padding-left: 8px; font-size: 0.8rem; font-weight: 700; line-height: 20px; }
+
+/* reference library */
+.stamp-refs { min-height: 0; overflow-y: auto; align-self: stretch; }
+.stamp-refs code { font-size: 0.8rem; }
+.stamp-refs ul { list-style: none; margin: 10px 0 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.stamp-refs li {
+  display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 8px;
+  border-radius: 10px; background: #fff; border: 2px solid transparent;
+}
+.stamp-refs li img { height: 72px; width: auto; object-fit: contain; }
+.stamp-refs li code { color: #334155; text-align: center; word-break: break-all; font-size: 0.72rem; }
+.stamp-refs li.hit { border-color: var(--ok); }
+
+@media (max-width: 1100px) {
+  .summary-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 860px) {
+  .stamp-page { grid-template-columns: 1fr; grid-template-rows: minmax(0, 1fr); overflow-y: auto; }
+  .stamp-main { overflow: visible; }
+  .stamp-refs { overflow: visible; }
+  .stamp-compare { grid-template-columns: 1fr; }
+  .stamp-facts { grid-template-columns: 1fr; }
+}

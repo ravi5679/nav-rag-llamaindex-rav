@@ -1,0 +1,50 @@
+.auth-page {
+  min-height: calc(100vh - var(--nav-h));
+  display: grid; place-items: center; padding: 40px 16px;
+  background:
+    radial-gradient(600px 300px at 20% 0%, rgba(59, 130, 246, 0.18), transparent),
+    radial-gradient(500px 300px at 90% 100%, rgba(34, 211, 238, 0.12), transparent);
+}
+.auth-card {
+  width: 100%; max-width: 420px; display: flex; flex-direction: column;
+  background: var(--card); border: 1px solid var(--border); border-radius: 20px;
+  padding: 32px 28px; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+}
+.auth-card h1 { font-size: 1.6rem; margin-bottom: 4px; }
+.auth-avatar {
+  width: 76px; height: 76px; border-radius: 50%; object-fit: cover; object-position: 50% 18%;
+  border: 2px solid var(--accent); margin-bottom: 14px;
+}
+.auth-card label { font-size: 0.85rem; font-weight: 600; margin: 14px 0 6px; }
+.auth-card input[aria-invalid='true'] { border-color: var(--err); }
+.field-error { color: var(--err); font-size: 0.82rem; margin-top: 6px; }
+.form-error {
+  margin-top: 16px; padding: 10px 12px; border-radius: 10px; font-size: 0.9rem;
+  color: var(--err); background: rgba(248, 113, 113, 0.1); border: 1px solid rgba(248, 113, 113, 0.35);
+}
+.auth-card .btn { margin-top: 22px; }
+.field-hint { color: var(--muted); font-size: 0.8rem; margin-top: 6px; }
+.form-notice {
+  margin-top: 12px; padding: 10px 12px; border-radius: 10px; font-size: 0.88rem;
+  color: var(--text); background: rgba(59, 130, 246, 0.12); border: 1px solid rgba(59, 130, 246, 0.35);
+}
+
+/* Login / Sign up switch */
+.auth-switch {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 4px; padding: 4px; margin-bottom: 18px;
+  background: var(--bg-soft); border: 1px solid var(--border); border-radius: 12px;
+}
+.auth-switch button {
+  background: transparent; color: var(--muted); border: 0; border-radius: 9px;
+  padding: 8px 12px; font-weight: 600; font-size: 0.92rem; cursor: pointer;
+}
+.auth-switch button:hover { color: var(--text); }
+.auth-switch button[aria-selected='true'] { background: var(--brand); color: #fff; }
+
+.auth-alt { margin: 18px 0 8px; font-size: 0.88rem; color: var(--muted); text-align: center; }
+.link-btn {
+  background: none; border: 0; padding: 0; font: inherit; font-weight: 600;
+  color: var(--accent-2); cursor: pointer; text-decoration: underline;
+}
+.back-link { text-align: center; font-size: 0.88rem; color: var(--muted); text-decoration: none; }
+.back-link:hover { color: var(--text); }

@@ -1,0 +1,78 @@
+:root {
+  --bg: #070d1a;
+  --bg-soft: #0b1428;
+  --card: #0f1830;
+  --card-hover: #14213f;
+  --text: #e8eefc;
+  --muted: #93a0bd;
+  --accent: #3b82f6;
+  --accent-2: #22d3ee;
+  --brand: #0088ce; /* active nav item / selected tab */
+  --border: #1d2b4d;
+  --err: #f87171;
+  --ok: #4ade80;
+  --radius: 14px;
+  --gradient: linear-gradient(135deg, #3b82f6 0%, #22d3ee 100%);
+  --nav-h: 68px;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Inter, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, h4 { line-height: 1.2; margin: 0 0 0.5em; }
+p { margin: 0 0 1em; }
+a { color: inherit; }
+img { max-width: 100%; display: block; }
+:focus-visible { outline: 2px solid var(--accent-2); outline-offset: 2px; }
+
+.container { width: 100%; max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+
+/* ---------- buttons ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  border: 1px solid transparent; border-radius: 10px;
+  padding: 10px 20px; font-size: 0.95rem; font-weight: 600; font-family: inherit;
+  text-decoration: none; cursor: pointer; transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
+}
+.btn:hover:not(:disabled) { transform: translateY(-1px); }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn-primary { background: var(--gradient); color: #04101f; box-shadow: 0 6px 20px rgba(59, 130, 246, 0.35); }
+.btn-ghost { background: transparent; color: var(--text); border-color: var(--border); }
+.btn-ghost:hover:not(:disabled) { background: var(--card-hover); }
+.btn-lg { padding: 13px 28px; font-size: 1.02rem; }
+.btn-sm { padding: 7px 14px; font-size: 0.88rem; }
+
+/* generic controls (used by dashboard pages) */
+button { font-family: inherit; }
+main button:not(.btn):not(.icon-btn) {
+  background: var(--gradient); color: #04101f; border: 0; border-radius: 10px;
+  padding: 9px 16px; cursor: pointer; font-size: 0.95rem; font-weight: 600;
+}
+main button:not(.btn):not(.icon-btn):disabled { opacity: 0.5; cursor: not-allowed; }
+input {
+  background: var(--bg-soft); color: var(--text); border: 1px solid var(--border);
+  border-radius: 10px; padding: 10px 12px; font-size: 0.95rem; font-family: inherit;
+}
+input:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25); }
+
+.muted { color: var(--muted); }
+.error { color: var(--err); }
+.ok { color: var(--ok); }
+
+/* ---------- shared chat / upload pieces (layout lives in features/rag-chat/rag-chat.css) ---------- */
+.row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-bottom: 8px; }
+.bubble { padding: 10px 14px; border-radius: 12px; max-width: 90%; white-space: pre-wrap; }
+.bubble p { margin: 0 0 8px; }
+.bubble.user { background: var(--gradient); color: #04101f; margin-left: auto; font-weight: 500; }
+.bubble.bot { background: var(--card); border: 1px solid var(--border); margin-top: 8px; }
+.sources { font-size: 0.85rem; color: var(--muted); }
+.sources p { margin: 4px 0 12px; word-break: break-word; }
+.score { font-weight: normal; }

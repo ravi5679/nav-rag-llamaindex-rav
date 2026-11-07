@@ -1,0 +1,60 @@
+/* Scrolls inside the workspace body, like the chat panels */
+.arch-page {
+  flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain;
+  display: flex; flex-direction: column; gap: 16px; padding-bottom: 8px;
+}
+
+.arch-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); }
+
+.arch-flow { padding: 8px; }
+.arch-flow img { width: 100%; height: auto; border-radius: 10px; }
+
+.arch-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+
+.arch-steps { padding: 18px 20px; }
+.arch-steps header { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 10px; }
+.arch-steps h3 { margin: 0; font-size: 1.02rem; }
+.arch-steps.ingest h3 { color: var(--accent); }
+.arch-steps.query h3 { color: var(--accent-2); }
+.arch-steps header code { font-size: 0.8rem; color: var(--muted); }
+
+.arch-steps ol { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 10px; }
+.arch-steps li { display: flex; flex-direction: column; font-size: 0.9rem; }
+.arch-steps li::marker { color: var(--muted); font-weight: 700; }
+.arch-steps li code {
+  align-self: flex-start; margin-top: 3px; padding: 1px 7px; border-radius: 6px;
+  font-size: 0.76rem; color: var(--accent-2); background: var(--bg-soft); border: 1px solid var(--border);
+}
+
+.arch-note { margin: 0; font-size: 0.88rem; }
+
+.arch-heading { margin: 8px 0 0; font-size: 1.1rem; }
+.arch-heading:first-child { margin-top: 0; }
+.arch-steps.session h3 { color: #fbbf24; }
+.arch-steps.hybrid h3 { color: #a78bfa; }
+
+/* Naive vs Hybrid comparison */
+.arch-compare { grid-template-columns: 110px minmax(0, 1fr) minmax(0, 1fr); }
+.arch-compare-head { font-size: 0.78rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
+.arch-small code { color: var(--accent-2); }
+.arch-steps.data h3 { color: var(--ok); }
+
+/* "Where data lives" table */
+.arch-table { display: flex; flex-direction: column; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+.arch-row {
+  display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1.4fr) auto; gap: 10px; align-items: baseline;
+  padding: 8px 12px; font-size: 0.84rem;
+}
+.arch-row + .arch-row { border-top: 1px solid var(--border); }
+.arch-row code { font-size: 0.78rem; color: var(--accent-2); word-break: break-all; }
+.arch-life { font-size: 0.72rem; font-weight: 700; padding: 1px 8px; border-radius: 999px; white-space: nowrap; }
+.arch-life.temp { color: #fbbf24; background: rgba(251, 191, 36, 0.12); }
+.arch-life.keep { color: var(--ok); background: rgba(74, 222, 128, 0.12); }
+.arch-small { margin: 10px 0 0; font-size: 0.82rem; }
+
+@media (max-width: 860px) {
+  .arch-grid { grid-template-columns: 1fr; }
+  .arch-row:not(.arch-compare) { grid-template-columns: 1fr auto; }
+  .arch-row:not(.arch-compare) > span.muted { grid-column: 1 / -1; grid-row: 2; }
+  .arch-compare { grid-template-columns: 80px minmax(0, 1fr) minmax(0, 1fr); font-size: 0.8rem; }
+}
